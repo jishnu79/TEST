@@ -1,9 +1,11 @@
 import { login, register } from '@/Api/Auth'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
 function Register() {
     const [isSignup, setIsSignup] = useState(true)
+    const router = useRouter()
     const [data, setdata] = useState({
         name: "",
         email: "",
@@ -29,6 +31,7 @@ function Register() {
                             confirmpass: ""
                         })
                         location.reload()
+                        router.push(`/dashboard/${da?.data._id}`)
                     } else {
                         toast.error(da.message)
                     }
@@ -40,6 +43,8 @@ function Register() {
             if (data.email && data.password) {
                 login(data).then((da: any) => {
                     if (da.success) {
+                        console.log(da);
+                        
                         toast.success(da.message)
                         localStorage.setItem('token', da.token)
                         setdata({
@@ -48,7 +53,8 @@ function Register() {
                             password: "",
                             confirmpass: ""
                         })
-                        location.reload()
+                        // location.reload()
+                        router.push(`/dashboard/${da?.data._id}`)
                     } else {
                         toast.error(da.message)
                     }

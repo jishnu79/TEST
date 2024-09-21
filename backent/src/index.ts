@@ -3,9 +3,10 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
 import auth from './Routes/AuthRoute'
+import user from './Routes/UserRoute'
 
 const app = express();
-app.use(express.json());
+app.use(express.json({limit:'60mb'}));
 app.use(cors())
 dotenv.config();
 
@@ -24,3 +25,4 @@ app.listen(port, () => {
   });
 
   app.use('/auth', auth) 
+  app.use('/user',user)

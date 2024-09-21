@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import UserModel from '../Models/UserModel'
 
 export const registerUser = async (req: express.Request, res: express.Response) => {
-
+ 
     const salt = await bcrypt.genSalt(10);
     if (req.body.password) {
         req.body.password = await bcrypt.hash(req.body.password, salt);
@@ -20,7 +20,6 @@ export const registerUser = async (req: express.Request, res: express.Response) 
             return res.send({ success: false, message: "Email is already registerd" })
         }
         const user = await newUser.save()
-        console.log(user);
 
         const token = jwt.sign({
             username: user.email, id: user._id
@@ -38,9 +37,9 @@ export const login = async (req: express.Request, res: express.Response) => {
             const token = jwt.sign({
                 username: user.email, id: user._id
             }, process.env.JWT_KEY, { expiresIn: '1h' })
-            return res.send({ success: true, message: "Login success", token })
+            return res.send({ success: true,data: user, message: "Login success", token })
         } else {
-            return res.send({ success: false, message: "User not Found" })
+            return res.send({ success: false,  message: "User not Found" })
         }
     } catch (error) {
         return res.send({ success: false, message: "Server error" })

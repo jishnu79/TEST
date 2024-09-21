@@ -4,7 +4,6 @@ import Users from "./LayOut/Users"
 import { getCurrentUser } from "@/Api/Auth"
 import { useDispatch } from "react-redux"
 import { setUser } from "@/Redux/Features/GetUser"
-import { useAppSelector } from "@/Redux/Store"
 
 interface LayoutProps {
     children: React.ReactNode
@@ -12,7 +11,7 @@ interface LayoutProps {
 
 const Laout: React.FC<LayoutProps> = ({ children }) => {
     const dispatch = useDispatch()
-    
+   
     useEffect(() => {
         getCurrentUser().then((data: any) => {
             if (data) {

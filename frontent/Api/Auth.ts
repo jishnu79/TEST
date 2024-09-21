@@ -34,7 +34,6 @@ export const getCurrentUser = async () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
-            console.log(res);
             
         if (res.data.success) {
             return res.data
