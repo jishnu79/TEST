@@ -28,7 +28,7 @@ function Register() {
                             password: "",
                             confirmpass: ""
                         })
-
+                        location.reload()
                     } else {
                         toast.error(da.message)
                     }
@@ -48,7 +48,7 @@ function Register() {
                             password: "",
                             confirmpass: ""
                         })
-
+                        location.reload()
                     } else {
                         toast.error(da.message)
                     }

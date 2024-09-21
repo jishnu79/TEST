@@ -1,11 +1,20 @@
+import { useAppSelector } from "@/Redux/Store";
+import Register from "./register/[Register]";
 import Dashboard from "@/Component/Dashboard";
-import Register from "@/Component/Register";
 
 
 export default function Home() {
+  const { user } = useAppSelector((state) =>
+    state.user
+  )
+  console.log(user);
+
   return (
     <>
-    <Register/>
+      {
+        user ? <Dashboard /> : <Register />
+      }
+
     </>
   )
 }

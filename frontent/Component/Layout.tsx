@@ -1,12 +1,27 @@
-import React from "react"
+import React, { useEffect } from "react"
 import SideBar from "./LayOut/SideBar"
 import Users from "./LayOut/Users"
+import { getCurrentUser } from "@/Api/Auth"
+import { useDispatch } from "react-redux"
+import { setUser } from "@/Redux/Features/GetUser"
+import { useAppSelector } from "@/Redux/Store"
 
 interface LayoutProps {
     children: React.ReactNode
 }
 
 const Laout: React.FC<LayoutProps> = ({ children }) => {
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        getCurrentUser().then((data: any) => {
+            if (data) {
+                dispatch(setUser(data.data))
+            } else {
+                return
+            }
+        })
+    })
 
     return (
         <div className="h-screen ">

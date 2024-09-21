@@ -47,10 +47,19 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
 }
 
-export const getUserData = async (req: express.Request, res: express.Response) => {
+export const authControler = async (req: express.Request, res: express.Response) => {
     try {
-        
+        const user = await UserModel.findById({ _id: req.body.userId })
+        if (!user) {
+            return res.status(200).send({ message: "user net found", success: false })
+        } else {
+            res.status(200).send({
+                success: true,
+                data: user
+            })
+        }
     } catch (error) {
-        return res.send({ success: false, message: "Server error" })
+        console.log(error);
+        res.status(200).send({ message: "Auth error", success: false })
     }
 }
