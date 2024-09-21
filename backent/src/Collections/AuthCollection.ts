@@ -17,16 +17,40 @@ export const registerUser = async (req: express.Request, res: express.Response) 
     try {
         const oldUser = await UserModel.findOne({ email })
         if (oldUser) {
-            return res.send({success:false, message: "Email is already registerd" })
+            return res.send({ success: false, message: "Email is already registerd" })
         }
         const user = await newUser.save()
         console.log(user);
-        
+
         const token = jwt.sign({
             username: user.email, id: user._id
         }, process.env.JWT_KEY, { expiresIn: '1h' })
-        res.send({ data: user,success:true, token,message:"Registration success" })
+        res.send({ data: user, success: true, token, message: "Registration success" })
     } catch (error) {
         res.status(500).json({ message: error.message })
+    }
+}
+
+export const login = async (req: express.Request, res: express.Response) => {
+    try {
+        const user = await UserModel.findOne({ email: req.body.email })
+        if (user) {
+            const token = jwt.sign({
+                username: user.email, id: user._id
+            }, process.env.JWT_KEY, { expiresIn: '1h' })
+            return res.send({ success: true, message: "Login success", token })
+        } else {
+            return res.send({ success: false, message: "User not Found" })
+        }
+    } catch (error) {
+        return res.send({ success: false, message: "Server error" })
+    }
+}
+
+export const getUserData = async (req: express.Request, res: express.Response) => {
+    try {
+        
+    } catch (error) {
+        return res.send({ success: false, message: "Server error" })
     }
 }

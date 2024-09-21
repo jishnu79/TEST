@@ -12,3 +12,14 @@ export const register = async (data: any) => {
         return error
     }
 }
+
+export const login = async (data: any) => {
+    try {
+        const res = await API.post('/auth/login', data)
+        if (res.data) {
+            return res.data
+        }
+    } catch (error) {
+        return error
+    }
+}

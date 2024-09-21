@@ -1,4 +1,4 @@
-import { register } from '@/Api/Auth'
+import { login, register } from '@/Api/Auth'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -21,13 +21,13 @@ function Register() {
                 register(data).then((da: any) => {
                     if (da.success) {
                         toast.success(da.message)
-                        localStorage.setItem('token',da.token)
+                        localStorage.setItem('token', da.token)
                         setdata({
                             name: "",
                             email: "",
                             password: "",
                             confirmpass: ""
-                          })
+                        })
 
                     } else {
                         toast.error(da.message)
@@ -35,6 +35,24 @@ function Register() {
                 })
             } else {
                 setConfirmPss(false)
+            }
+        } else {
+            if (data.email && data.password) {
+                login(data).then((da: any) => {
+                    if (da.success) {
+                        toast.success(da.message)
+                        localStorage.setItem('token', da.token)
+                        setdata({
+                            name: "",
+                            email: "",
+                            password: "",
+                            confirmpass: ""
+                        })
+
+                    } else {
+                        toast.error(da.message)
+                    }
+                })
             }
         }
     }
