@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
+import auth from './Routes/AuthRoute'
 
 const app = express();
 app.use(express.json());
@@ -21,3 +22,5 @@ mongoose
 app.listen(port, () => {
     console.log(`User Server is running at ${port}`);  
   });
+
+  app.use('/auth', auth) 
